@@ -3,13 +3,11 @@
 
     export let field;
 
-    let showPreview: boolean = false;
-    let previewPath: string = "";
+    let previewPath: string = "https://via.placeholder.com/150";
 
-    function handleInput(event: Event){
-        if (event.target.type === "file"){
-            console.log(event.target)
-            previewPath = URL.createObjectURL(event.target.files[0]);
+    function handleInput(target: HTMLInputElement){
+        if (target.type === "file"){
+            previewPath = URL.createObjectURL(target.files[0]);
         }
         /// update data here
     }
@@ -17,7 +15,7 @@
 
 
     <label for={field.name}>{field.name}</label>
-    <input type={field.type} on:input="{(e) => handleInput(e)}"/><br>
+    <input type={field.type} on:input="{(e) => handleInput(e.target)}"/><br>
     {#if field.type === "file"}
         <ImagePreview src={previewPath} alt={widget.alt}/>
     {/if}
