@@ -1,5 +1,7 @@
 <script lang="ts">
-    import GenericFormField from "./GenericFormField.svelte";
+    import GenericInputField from "./GenericInputField.svelte";
+    import GenericFileField from "./GenericFileField.svelte";
+
     export let widget;
 
     let inputString: string;
@@ -9,6 +11,11 @@
 </script>
 <div class="widget-form">
     {#each widget.fields as field, index}
-        <GenericFormField {field} />
+        {#if field.type === "file"}
+            <GenericFileField {field} />
+        {:else}
+            <GenericInputField {field} />
+        {/if}
+
     {/each}
 </div>
