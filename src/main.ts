@@ -9,7 +9,6 @@ const app = new App({
 	props: {
 		callBack,
 		existing_widgets: [
-			{index:1, name:"image", type:"image"},
 			// {index:2, name:"title", type:"title"} 
 		]
 	}

@@ -1,35 +1,52 @@
 <script lang="ts">
     import ImagePreview from "./ImagePreview.svelte";
-    import GenericInputField from "./GenericInputField.svelte"
+    import WidgetPreview from "./WidgetPreview.svelte";
 
     export let field;
 
-    let previewPath: string = "https://via.placeholder.com/250";
+    let data = {
+        src: "https://via.placeholder.com/250",
+        alt: "",
+        url: ""
+    }
+    let src = "https://via.placeholder.com/250";
+
+    let fileField: HTMLInputElement;
 
     function handleInput(event: { target: HTMLInputElement; }){
         if (event.target.type === "file"){
-            previewPath = URL.createObjectURL(event.target.files[0]);
+            var fReader = new FileReader();
+            fReader.readAsDataURL(event.target.files[0]);
+            fReader.onloadend = (e) => {
+                data.src = e.target.result.toString();
+            }
         }
-        /// update data here
+    }
+
+    function passClickToField(){
+        // pass the click event from the image box onto the input
+        fileField.click()
     }
 </script>
 
-<div class="content-builder__image-widget-container">
-    <div class="content-builder__image-widget-child">
-        <label for={field.name}>{field.name}</label>
-        <input type={field.type} on:input="{(e) => handleInput(e)}"/>
-        <!-- <GenericInputField field={field} on:input="{(e) => handleInput(e)}" /><br> -->
-    </div>
-    <div class="content-builder__image-widget-container-child">
-        <ImagePreview src={previewPath} alt={widget.alt}/>
-    </div>
-</div>
+<label for={field.name}>{field.name}</label>
+<input 
+    bind:this={fileField} 
+    bind:value={data.src}
+    type="file" 
+    on:input={(e) => handleInput(e)} 
+/>
+<br>
+<ImagePreview 
+    src={data.src} 
+    alt={widget.alt} 
+    on:click={(e) => passClickToField(e)} 
+/>
+
+
 
 <style>
-    .content-builder__image-widget-container{
-        display:flex;
-    }
-    .content-builder__image-widget-child{
-       flex: 1;
+    input[type="file"]{
+        display: none;
     }
 </style>

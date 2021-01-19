@@ -4,18 +4,19 @@
 
     export let widget;
 
-    let inputString: string;
-
-
-
 </script>
 <div class="widget-form">
-    {#each widget.fields as field, index}
-        {#if field.type === "file"}
-            <GenericFileField {field} />
-        {:else}
-            <GenericInputField {field} />
-        {/if}
+    {#if widget.active}
+        {#each widget.fields as field, index}
+            {#if field.type === "file"}
+                <GenericFileField {field} />
+            {:else}
+                <GenericInputField {field} />
+            {/if}
 
-    {/each}
+        {/each}
+    {:else}
+        <p> widget preview here</p>
+    {/if}
 </div>
+
