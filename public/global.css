@@ -67,3 +67,9 @@ button:focus {
 	margin: 20px;
 	background-color: #eee;
 }
+
+.widget-preview {
+	padding:20px;
+	margin: 20px;
+	background-color: #eee;
+}

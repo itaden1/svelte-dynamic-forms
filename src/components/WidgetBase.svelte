@@ -2,12 +2,15 @@
     import GenericInputField from "./GenericInputField.svelte";
     import GenericFileField from "./GenericFileField.svelte";
 
+    import type { iField } from "../interface";
+
     export let widget;
+    let fields: Array<iField> = widget.fields;
 
 </script>
 <div class="widget-form">
     {#if widget.active}
-        {#each widget.fields as field, index}
+        {#each fields as field, index}
             {#if field.type === "file"}
                 <GenericFileField {field} />
             {:else}

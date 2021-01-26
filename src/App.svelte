@@ -3,25 +3,42 @@
 	import WidgetBase from "./components/WidgetBase.svelte"; 
 	import WidgetPreview from "./components/WidgetPreview.svelte";
 
+	import type { iField, iComponentOption } from "./interface";
+
 	export let callBack;
 	export let existing_widgets: Array<object>;
 
-	const widgetComponents: {[key: string]:object} = {
-		existing:[
-			{
-				index: 0,
-				type:"image",
-				name: "image",
-				active: true,
-				fields: [
-					{type: "input", name: "url"}, 
-					{type: "file", name: "upload"},
-					{type: "input", name: "alt"}
-				]
-			},
-		],
-		options: {
-			"image":{
+	class WidgetComponent {
+		index: number;
+		type: string;
+		name: string;
+		active: boolean = false;
+		fields: Array<iField>;
+
+		constructor(index: number, type: string, name: string, fields: Array<iField>){
+			this.index = index;
+			this.type = type;
+			this.name = name;
+			this.fields = fields;
+		}
+	}
+
+	let existingComponents: Array<WidgetComponent> = [
+		{
+			index: 0,
+			type:"image",
+			name: "image",
+			active: true,
+			fields: [
+				{type: "input", name: "url"}, 
+				{type: "file", name: "upload"},
+				{type: "input", name: "alt"}
+			]
+		},
+	]
+
+	const componentOptions: {[key: string]: iComponentOption} = {
+		"image": {
 				type:"image",
 				name: "image",
 				fields: [
@@ -31,58 +48,86 @@
 				]
 			}
 		}
-		}
-		// "title": {name:"title", type:"title", fields: [{type: "input", name: "url"}]},
-		// "table": {name:"table", type:"table", fields: [{type: "input", name: "url"}]}
 	
 	
-
 	let widgetsOpen = false;
 
 	function addWidget(name: string){
-		const new_widget = widgetComponents.options[name];
+		const option = componentOptions[name];
+		let index = existingComponents.length + 1;
 
-		let oldWidgets = existing_widgets.map((i) => {
+		const new_widget = new WidgetComponent(index, option.type, option.name, option.fields);
+
+		let oldWidgets = existingComponents.map((i) => {
 			i.active = false;
 			return i;
 		})
 		new_widget.active = true;
-		existing_widgets = [...oldWidgets, new_widget];
+		existingComponents = [...oldWidgets, new_widget];
 		widgetsOpen = false;
 	}
 
 	function removeWidget(index: number){
-		let widgets = [...existing_widgets];
-		widgets.splice(index, 1);
-		existing_widgets = widgets;
+		let components = [...existingComponents];
+		components.splice(index, 1);
+		existingComponents = components;
 
 	}
 
 	function getWidget(index){
-		return widgetComponents.existing[index]
+		return existingComponents[index]
 	}
 
 </script>
 
 <main>
-	{#each existing_widgets as widget, index}
-	{widget.active}
-		<WidgetBase widget={getWidget(index)} />
-		<!-- <WidgetPreview widget={getWidget(widget)} /> -->
-		<button on:click={() => removeWidget(index)}>-</button>
-		<button on:click={() => widgetsOpen = !widgetsOpen} >+</button>
+	{#each existingComponents as widget, index}
+		{#if widget.active }
+			<WidgetBase widget={getWidget(index)} />
+		{:else}
+			<WidgetPreview widget={getWidget(index)} />
+		{/if}
+		<button 
+			on:click={() => removeWidget(index)}>
+			-
+		</button>
+		<button 
+			on:click={() => widgetsOpen = !widgetsOpen} >
+			+
+		</button>
 		{#if widgetsOpen}
-			<button on:click="{() => addWidget("image") }">[image]</button>
-			<button on:click="{() => addWidget("title") }">[title]</button>
-			<button on:click="{() => addWidget("table") }">[table]</button>
+			<button 
+				on:click="{() => addWidget("image") }">
+				[image]
+			</button>
+			<button
+			   on:click="{() => addWidget("title") }">
+			   [title]
+			</button>
+			<button 
+				on:click="{() => addWidget("table") }">
+				[table]
+			</button>
 
-			<button on:click="{() => widgetsOpen = !widgetsOpen}">close</button>
+			<button 
+				on:click="{() => widgetsOpen = !widgetsOpen}">
+				close
+			</button>
 		{/if}
 	{/each}
 	{#if existing_widgets.length <= 0}
-		<button on:click="{() => addWidget("image") }">[image]</button>
-		<button on:click="{() => addWidget("title") }">[title]</button>
-		<button on:click="{() => addWidget("table") }">[table]</button>
+		<button 
+			on:click="{() => addWidget("image") }">
+			[image]
+		</button>
+		<button
+			 on:click="{() => addWidget("title") }">
+			 [title]
+		</button>
+		<button
+			on:click="{() => addWidget("table") }">
+			[table]
+		</button>
 	{/if}
 
 </main>

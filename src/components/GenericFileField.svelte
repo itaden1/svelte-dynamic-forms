@@ -1,6 +1,8 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
     import ImagePreview from "./ImagePreview.svelte";
-    import WidgetPreview from "./WidgetPreview.svelte";
+
+    const dispatch = createEventDispatcher();
 
     export let field;
 
@@ -9,6 +11,7 @@
         alt: "",
         url: ""
     }
+
     let src = "https://via.placeholder.com/250";
 
     let fileField: HTMLInputElement;
@@ -18,29 +21,31 @@
             var fReader = new FileReader();
             fReader.readAsDataURL(event.target.files[0]);
             fReader.onloadend = (e) => {
-                data.src = e.target.result.toString();
+                src = e.target.result.toString();
             }
         }
+        dispatch("fileUpdated", )
     }
 
+    // pass the click event from the image box onto the input element
     function passClickToField(){
-        // pass the click event from the image box onto the input
         fileField.click()
     }
+
 </script>
 
 <label for={field.name}>{field.name}</label>
 <input 
     bind:this={fileField} 
-    bind:value={data.src}
+    bind:value={src}
     type="file" 
     on:input={(e) => handleInput(e)} 
 />
 <br>
 <ImagePreview 
-    src={data.src} 
+    src={src} 
     alt={widget.alt} 
-    on:click={(e) => passClickToField(e)} 
+    on:click={(e) => passClickToField()} 
 />
 
 
