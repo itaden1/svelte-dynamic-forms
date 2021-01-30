@@ -1,20 +1,18 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+    import type { WidgetComponent } from "../models";
     import ImagePreview from "./ImagePreview.svelte";
-
-    const dispatch = createEventDispatcher();
+    import { existingComponents } from "../stores";
 
     export let field;
-
-    let data = {
-        src: "https://via.placeholder.com/250",
-        alt: "",
-        url: ""
-    }
+    export let widget;
 
     let src = "https://via.placeholder.com/250";
 
     let fileField: HTMLInputElement;
+
+    function getCurrentComponent(components: Array<WidgetComponent>){
+        return $existingComponents.filter(c => c.active).pop();
+    }
 
     function handleInput(event: { target: HTMLInputElement; }){
         if (event.target.type === "file"){
@@ -22,9 +20,10 @@
             fReader.readAsDataURL(event.target.files[0]);
             fReader.onloadend = (e) => {
                 src = e.target.result.toString();
+                let current = getCurrentComponent($existingComponents);
+                current.setElementAttributes("src", src);
             }
         }
-        dispatch("fileUpdated", )
     }
 
     // pass the click event from the image box onto the input element

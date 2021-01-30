@@ -1,5 +1,6 @@
 <script lang="ts">
     export let field;
+    export let widget;
 
     let value: string = "";
 

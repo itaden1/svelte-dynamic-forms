@@ -4,8 +4,9 @@
 
 </script>
 
-<div class="content-builder__image-preview" on:click >
-    <img src="{src}" alt="{alt}"/>
+<div class="content-builder__image-preview" 
+    on:click >
+        <img src="{src}" alt="{alt}"/>
 </div>
 <style>
     .content-builder__image-preview{
