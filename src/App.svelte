@@ -4,7 +4,7 @@
 	import WidgetPreview from "./components/WidgetPreview.svelte";
 	import { componentOptions, existingComponents } from "./stores";
 
-	import { WidgetComponent } from "./models";
+	import { WidgetComponent, ImageElement } from "./models";
 
 	export let callBack;
 	export let existing_widgets: Array<object>;
@@ -14,6 +14,9 @@
 
 	function addWidget(name: string){
 		const option = $componentOptions[name];
+		if (name === "image"){
+			option.element = new ImageElement();
+		}
 		let index = $existingComponents.length + 1;
 
 		const new_widget = new WidgetComponent(index, option);
