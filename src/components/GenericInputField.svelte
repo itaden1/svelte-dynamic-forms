@@ -1,11 +1,14 @@
 <script lang="ts">
-    export let field;
-    export let widget;
+    import { createEventDispatcher } from "svelte";
 
-    let value: string = "";
+    const dispatch = createEventDispatcher();
+
+    export let field;
+    export let widget
+
 
     function handleInput(event:{ target: HTMLInputElement }){
-        value = event.target.value;
+        dispatch("fieldChange", event);
     }
 
 </script>
@@ -13,5 +16,6 @@
     <input 
         type={field.type} 
         on:input="{(e) => handleInput(e)}"
-        value={value}    
+        name={field.name}
+        value={field.value}    
     /><br>

@@ -13,6 +13,19 @@ export class WidgetComponent {
         Object.assign(this, options);
 
     }
+    
+    getFieldByName(name: string){
+        return this.fields.filter(f => f.name === name).pop();
+    }
+
+    setFieldByName(name: string, value: string) {
+        this.fields.map(f => {
+            if(f.name == name){
+                f.value = value;
+            }
+            return f;
+        })
+    }
 
     setElementAttributes(name: string, value: string) {
         this.element.setAttribute(name, value);
@@ -22,7 +35,7 @@ export class WidgetComponent {
 export class ImageElement implements iElement {
     id: number;
     src: string = "https://via.placeholder.com/250";
-    alt:string;
+    alt: string;
 
     getAttribute(name: string){
         return this[name];

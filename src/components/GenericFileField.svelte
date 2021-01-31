@@ -1,12 +1,12 @@
 <script lang="ts">
     import type { WidgetComponent } from "../models";
     import ImagePreview from "./ImagePreview.svelte";
-    import { existingComponents } from "../stores";
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher();
 
     export let field;
     export let widget;
-
-    // let src = "https://via.placeholder.com/250";
 
     let fileField: HTMLInputElement;
 
@@ -15,20 +15,7 @@
     }
 
     function handleInput(event: { target: HTMLInputElement; }){
-        if (event.target.type === "file"){
-            var fReader = new FileReader();
-            fReader.readAsDataURL(event.target.files[0]);
-            fReader.onloadend = (e) => {
-                const tmpImage = e.target.result.toString();
-                let components = $existingComponents.map(c => {
-                    if (c.active) {
-                        c.setElementAttributes("src", tmpImage)
-                    }
-                    return c;
-                });
-                $existingComponents = components;
-            }
-        }
+        dispatch("fieldChange", event);
     }
 
     // pass the click event from the image box onto the input element
@@ -42,13 +29,14 @@
 <input 
     bind:this={fileField} 
     bind:value={widget.element.src}
+    name={field.name}
     type="file" 
     on:input={(e) => handleInput(e)} 
 />
 <br>
 <ImagePreview 
-    src={getCurrentComponent($existingComponents).element.getAttribute("src")} 
-    alt={getCurrentComponent($existingComponents).element.getAttribute("alt")} 
+    src={widget.element.getAttribute("src")} 
+    alt={widget.element.getAttribute("alt")}
     on:click={(e) => passClickToField()} 
 />
 

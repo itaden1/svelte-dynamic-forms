@@ -9,9 +9,9 @@ export const existingComponents = writable<Array<WidgetComponent>>([
         name: "image",
         active: true,
         fields: [
-            {type: "input", name: "url"}, 
-            {type: "file", name: "upload"},
-            {type: "input", name: "alt"}
+            {type: "input", name: "url", value: ""}, 
+            {type: "file", name: "upload", value: ""},
+            {type: "input", name: "alt", value: ""}
         ],
         element: new ImageElement()
     })
@@ -22,9 +22,9 @@ export const componentOptions = readable<{[key: string]: iComponentOption}>({
             type:"image",
             name: "image",
             fields: [
-                {type: "input", name: "url"}, 
-                {type: "file", name: "upload"},
-                {type: "input", name: "alt"}
+                {type: "input", name: "url", value: ""}, 
+                {type: "file", name: "upload", value: ""},
+                {type: "input", name: "alt", value: ""}
             ]
         }
     }, function start(set){
