@@ -12,4 +12,6 @@ export interface iComponentOption {
 
 export interface iElement {
     id: number;
+    getAttribute(name: string);
+    setAttribute(name: string, value: string);
 }

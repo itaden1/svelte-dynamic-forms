@@ -4,7 +4,7 @@ import { ImageElement, WidgetComponent } from "./models";
 
 
 export const existingComponents = writable<Array<WidgetComponent>>([
-    new WidgetComponent(1, {
+    new WidgetComponent(0, {
         type:"image",
         name: "image",
         active: true,

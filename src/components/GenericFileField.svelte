@@ -6,12 +6,12 @@
     export let field;
     export let widget;
 
-    let src = "https://via.placeholder.com/250";
+    // let src = "https://via.placeholder.com/250";
 
     let fileField: HTMLInputElement;
 
     function getCurrentComponent(components: Array<WidgetComponent>){
-        return $existingComponents.filter(c => c.active).pop();
+        return components.filter(c => c.active)[0];
     }
 
     function handleInput(event: { target: HTMLInputElement; }){
@@ -19,9 +19,14 @@
             var fReader = new FileReader();
             fReader.readAsDataURL(event.target.files[0]);
             fReader.onloadend = (e) => {
-                src = e.target.result.toString();
-                let current = getCurrentComponent($existingComponents);
-                current.setElementAttributes("src", src);
+                const tmpImage = e.target.result.toString();
+                let components = $existingComponents.map(c => {
+                    if (c.active) {
+                        c.setElementAttributes("src", tmpImage)
+                    }
+                    return c;
+                });
+                $existingComponents = components;
             }
         }
     }
@@ -36,14 +41,14 @@
 <label for={field.name}>{field.name}</label>
 <input 
     bind:this={fileField} 
-    bind:value={src}
+    bind:value={widget.element.src}
     type="file" 
     on:input={(e) => handleInput(e)} 
 />
 <br>
 <ImagePreview 
-    src={src} 
-    alt={widget.alt} 
+    src={getCurrentComponent($existingComponents).element.getAttribute("src")} 
+    alt={getCurrentComponent($existingComponents).element.getAttribute("alt")} 
     on:click={(e) => passClickToField()} 
 />
 

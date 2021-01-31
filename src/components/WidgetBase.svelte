@@ -9,6 +9,7 @@
 
 </script>
 <div class="widget-form">
+    {widget.index}
     {#each widget.fields as field, index}
         {#if field.type === "file"}
             <GenericFileField {field} {widget}/>

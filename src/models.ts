@@ -8,21 +8,28 @@ export class WidgetComponent {
     fields: Array<iField>;
     element: iElement;
 
-    constructor(index, options = {}){
+    constructor(index, options = {}) {
         this.index = index;
         Object.assign(this, options);
 
     }
 
-    setElementAttributes(name: string, value: string){
-        console.log(`setting attribute ${name} to ${value}`);
-        this.element[name] = value;
-        console.log(this.element);
+    setElementAttributes(name: string, value: string) {
+        this.element.setAttribute(name, value);
     }
 }
 
 export class ImageElement implements iElement {
     id: number;
-    src: string;
+    src: string = "https://via.placeholder.com/250";
     alt:string;
+
+    getAttribute(name: string){
+        return this[name];
+    }
+
+    setAttribute(name: string, value: string) {
+        this[name] = value;
+    }
+
 }
