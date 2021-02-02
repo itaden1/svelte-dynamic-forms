@@ -20,7 +20,7 @@
 
     // pass the click event from the image box onto the input element
     function passClickToField(){
-        fileField.click()
+        fileField.click();
     }
 
 </script>
@@ -31,7 +31,7 @@
     bind:value={widget.element.src}
     name={field.name}
     type="file" 
-    on:input={(e) => handleInput(e)} 
+    on:input={(event) => handleInput(event)} 
 />
 <br>
 <ImagePreview 
