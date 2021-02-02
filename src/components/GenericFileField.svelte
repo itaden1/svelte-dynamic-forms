@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { WidgetComponent } from "../models";
     import ImagePreview from "./ImagePreview.svelte";
     import { createEventDispatcher } from "svelte";
 
@@ -9,10 +8,6 @@
     export let widget;
 
     let fileField: HTMLInputElement;
-
-    function getCurrentComponent(components: Array<WidgetComponent>){
-        return components.filter(c => c.active)[0];
-    }
 
     function handleInput(event: { target: HTMLInputElement; }){
         dispatch("fieldChange", event);
