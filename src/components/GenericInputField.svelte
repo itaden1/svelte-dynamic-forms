@@ -5,7 +5,7 @@
 
     export let field;
     export let widget
-
+    console.log(field.value);
 
     function handleInput(event:{ target: HTMLInputElement }){
         dispatch("fieldChange", event);
@@ -17,5 +17,5 @@
         type={field.type} 
         on:input="{(e) => handleInput(e)}"
         name={field.name}
-        value={field.value}    
+        value={field.value}
     /><br>

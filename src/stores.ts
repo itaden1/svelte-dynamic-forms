@@ -1,6 +1,6 @@
 import { readable, writable } from "svelte/store";
 import type { iComponentOption } from "./interface";
-import { ImageElement, WidgetComponent } from "./models";
+import type { WidgetComponent } from "./models";
 
 
 function reIndexComponents(index, components) {
@@ -16,44 +16,31 @@ function reIndexComponents(index, components) {
 }
 
 function createExistingComponetns() {
-    const {subscribe, set, update } = writable<Array<WidgetComponent>>([
-        new WidgetComponent(0, {
-            type:"image",
-            name: "image",
-            active: true,
-            fields: [
-                {type: "input", name: "url", value: ""}, 
-                {type: "file", name: "upload", value: ""},
-                {type: "input", name: "alt", value: ""}
-            ],
-            element: new ImageElement()
-        })
-    ]);
+    const {subscribe, set, update } = writable<Array<WidgetComponent>>([]);
     return {
         subscribe,
-        edit: (widget: WidgetComponent) => update((n) => {
-            n.forEach(element => {
-                element.index === widget.index ? element = widget : element;   
+        patch: (widget: WidgetComponent) => update((components) => {
+            components.forEach(element => {
+                element.index === widget.index ? element = widget : element = element;   
             });
-            return n
+            return components
         }),
-        open: (index: number) => update(n => {
-            n.forEach(element => {
-                element.index === index ? element.active = true : element.active = false;   
+        open: (index: number) => update(components => {
+            components.forEach(element => {
+                element.index === index ? element.active = true : element.active = false;
             });
-            return n;
+            return components;
         }),
-        insert: (index, widget) => update(n => {
-            let reIndexed = reIndexComponents(index, n);
-            n = [...reIndexed, widget];
-            return n.sort((a, b) => a.index > b.index ? 1 : -1);;
+        insert: (index, widget) => update(components => {
+            let reIndexed = reIndexComponents(index, components);
+            components = [...reIndexed, widget];
+            return components.sort((a, b) => a.index > b.index ? 1 : -1);;
         }),
-        delete: (index) => update(n => {
-            n.splice(index, 1)
-            return reIndexComponents(0, n);
+        delete: (index) => update(components => {
+            components.splice(index, 1)
+            return reIndexComponents(0, components);
         })
     }
-  
 }
 
 export const existingComponents = createExistingComponetns()

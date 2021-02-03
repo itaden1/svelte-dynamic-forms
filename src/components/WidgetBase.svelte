@@ -8,6 +8,8 @@
 
     export let widget: WidgetComponent;
 
+
+
     const componentMap = {
         "file": GenericFileField,
         "input": GenericInputField
@@ -25,30 +27,30 @@
                 component.setElementAttributes("src", tmpImage)
                 component.setFieldByName(event.target.name, event.target.value);
                 component.setFieldByName("url", "");
-                existingComponents.edit(component);
+                existingComponents.patch(component);
             }            
         }        
         else if (event.target.name === "url"){
             component.setElementAttributes("src", event.target.value);
             component.setFieldByName(event.target.name, event.target.value);
-            existingComponents.edit(component);
+            existingComponents.patch(component);
         } else {
             component.setFieldByName(event.target.name, event.target.value);
-            existingComponents.edit(component);
+            existingComponents.patch(component);
         }
 
     }
 
 </script>
-<div class="widget-form">
+<form class="widget-form">
     {widget.index}
     {#each widget.fields as field, index}
         <svelte:component 
             this={componentMap[field.type]}
             {field} 
-            {widget} 
+            {widget}
             on:fieldChange={() => handleFieldChange(event)} 
         />
     {/each}
-</div>
+</form>
 

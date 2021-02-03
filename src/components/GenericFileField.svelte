@@ -32,10 +32,8 @@
 <ImagePreview 
     src={widget.element.getAttribute("src")} 
     alt={widget.element.getAttribute("alt")}
-    on:click={(e) => passClickToField()} 
+    on:click={() => passClickToField()} 
 />
-
-
 
 <style>
     input[type="file"]{

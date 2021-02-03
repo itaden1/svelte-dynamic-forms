@@ -19,12 +19,13 @@ export class WidgetComponent {
     }
 
     setFieldByName(name: string, value: string) {
-        this.fields.map(f => {
+        let fields = this.fields.map(f => {
             if(f.name == name){
                 f.value = value;
             }
             return f;
-        })
+        });
+        this.fields = fields;
     }
 
     setElementAttributes(name: string, value: string) {

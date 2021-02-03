@@ -18,8 +18,7 @@
 		if (name === "image"){
 			option.element = new ImageElement();
 		}
-
-		index++;
+		$existingComponents.length > 0 ? index++ : index;
 		const newComponent = new WidgetComponent(index, option);
 		existingComponents.insert(index, newComponent);
 		existingComponents.open(index);
@@ -51,8 +50,8 @@
 					[image]
 				</button>
 				<button
-				on:click="{() => addComponent("title", index) }">
-				[title]
+					on:click="{() => addComponent("title", index) }">
+					[title]
 				</button>
 				<button 
 					on:click="{() => addComponent("table", index) }">
