@@ -22,7 +22,7 @@
 
 <label for={field.name}>{field.name}</label>
 <input 
-    bind:this={fileField} 
+    bind:this={fileField}
     bind:value={widget.element.src}
     name={field.name}
     type="file" 

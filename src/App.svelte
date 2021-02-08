@@ -1,4 +1,5 @@
 <script lang="ts">
+	import lodash from "lodash";
 
 	import WidgetBase from "./components/WidgetBase.svelte"; 
 	import WidgetPreview from "./components/WidgetPreview.svelte";
@@ -7,6 +8,8 @@
 
 	import { WidgetComponent, ImageElement } from "./models";
 
+	const _ = lodash;
+
 	export let callBack;
 	export let existing_widgets: Array<object>;
 	
@@ -14,7 +17,7 @@
 	let widgetsOpen = false;
 
 	function addComponent(name: string, index: number){
-		const option: iComponentOption = $componentOptions[name];
+		const option: iComponentOption = _.cloneDeep($componentOptions[name]);
 		if (name === "image"){
 			option.element = new ImageElement();
 		}

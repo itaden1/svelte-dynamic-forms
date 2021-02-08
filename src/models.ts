@@ -9,6 +9,7 @@ export class WidgetComponent {
     element: iElement;
 
     constructor(index, options = {}) {
+        console.log(options, "*******")
         this.index = index;
         Object.assign(this, options);
 
