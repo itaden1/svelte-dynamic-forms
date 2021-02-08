@@ -1,6 +1,7 @@
 <script lang="ts">
     import GenericInputField from "./GenericInputField.svelte";
     import GenericFileField from "./GenericFileField.svelte";
+    import RichTextField from "./RichTextField.svelte";
 
     import { existingComponents } from "../stores";
 
@@ -12,7 +13,8 @@
 
     const componentMap = {
         "file": GenericFileField,
-        "input": GenericInputField
+        "input": GenericInputField,
+        "richText": RichTextField
     }
 
     function handleFieldChange(event: { target: HTMLInputElement; }){
@@ -44,13 +46,17 @@
 </script>
 <form class="widget-form">
     {widget.index}
-    {#each widget.fields as field, index}
-        <svelte:component 
-            this={componentMap[field.type]}
-            {field} 
-            {widget}
-            on:fieldChange={() => handleFieldChange(event)} 
-        />
-    {/each}
+    {#if widget.fields.length > 0}
+        {#each widget.fields as field, index}
+            <svelte:component 
+                this={componentMap[field.type]}
+                {field} 
+                {widget}
+                on:fieldChange={() => handleFieldChange(event)} 
+            />
+        {/each}
+    {:else}
+        <RichTextField/>
+    {/if}
 </form>
 

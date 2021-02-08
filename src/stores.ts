@@ -55,7 +55,12 @@ export const componentOptions = readable<{[key: string]: iComponentOption}>({
                 {type: "file", name: "upload", value: ""},
                 {type: "input", name: "alt", value: ""}
             ]
-        }
+        },
+    text: {
+        type: "text",
+        name: "text",
+        fields: []
+    }
     }, function start(set){
     console.log("start");
 

@@ -53,8 +53,8 @@
 					[image]
 				</button>
 				<button
-					on:click="{() => addComponent("title", index) }">
-					[title]
+					on:click="{() => addComponent("richText", index) }">
+					[Rich Text]
 				</button>
 				<button 
 					on:click="{() => addComponent("table", index) }">
@@ -74,8 +74,8 @@
 			[image]
 		</button>
 		<button
-			 on:click="{() => addComponent("title", 0) }">
-			 [title]
+			on:click="{() => addComponent("richText", 0) }">
+			[Rich Text]
 		</button>
 		<button
 			on:click="{() => addComponent("table", 0) }">
