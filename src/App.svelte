@@ -4,9 +4,9 @@
 	import WidgetBase from "./components/WidgetBase.svelte"; 
 	import WidgetPreview from "./components/WidgetPreview.svelte";
 	import { componentOptions, existingComponents } from "./stores";
-	import type {iComponentOption } from "./interface";
+	import type {iComponentOption, iElement } from "./interface";
 
-	import { WidgetComponent, ImageElement } from "./models";
+	import { WidgetComponent, BaseElement, ImageElement } from "./models";
 
 	const _ = lodash;
 
@@ -17,12 +17,17 @@
 	let widgetsOpen = false;
 
 	function addComponent(name: string, index: number){
-		const option: iComponentOption = _.cloneDeep($componentOptions[name]);
+		// const option: iComponentOption = _.cloneDeep($componentOptions[name]);
+		const option: iComponentOption = $componentOptions[name];
+		let element: iElement;
 		if (name === "image"){
-			option.element = new ImageElement();
+			element = new ImageElement();
+		}
+		else {
+			element = new BaseElement();
 		}
 		$existingComponents.length > 0 ? index++ : index;
-		const newComponent = new WidgetComponent(index, option);
+		const newComponent = new WidgetComponent(index, {...option, element});
 		existingComponents.insert(index, newComponent);
 		existingComponents.open(index);
 	}

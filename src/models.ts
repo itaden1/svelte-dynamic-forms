@@ -34,11 +34,8 @@ export class WidgetComponent {
     }
 }
 
-export class ImageElement implements iElement {
+export class BaseElement implements iElement{
     id: number;
-    src: string = "https://via.placeholder.com/250";
-    alt: string;
-
     getAttribute(name: string){
         return this[name];
     }
@@ -46,5 +43,10 @@ export class ImageElement implements iElement {
     setAttribute(name: string, value: string) {
         this[name] = value;
     }
+}
 
+export class ImageElement extends BaseElement {
+    id: number;
+    src: string = "https://via.placeholder.com/250";
+    alt: string;
 }

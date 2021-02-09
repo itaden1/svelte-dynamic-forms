@@ -56,10 +56,12 @@ export const componentOptions = readable<{[key: string]: iComponentOption}>({
                 {type: "input", name: "alt", value: ""}
             ]
         },
-    text: {
-        type: "text",
-        name: "text",
-        fields: []
+    richText: {
+        type: "richText",
+        name: "richText",
+        fields: [
+            {type: "contentEditable", name: "content", value: ""}
+        ]
     }
     }, function start(set){
     console.log("start");

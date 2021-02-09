@@ -9,12 +9,10 @@
 
     export let widget: WidgetComponent;
 
-
-
     const componentMap = {
         "file": GenericFileField,
         "input": GenericInputField,
-        "richText": RichTextField
+        "contentEditable": RichTextField
     }
 
     function handleFieldChange(event: { target: HTMLInputElement; }){
@@ -37,6 +35,7 @@
             component.setFieldByName(event.target.name, event.target.value);
             existingComponents.patch(component);
         } else {
+            console.log(existingComponents);
             component.setFieldByName(event.target.name, event.target.value);
             existingComponents.patch(component);
         }
@@ -44,19 +43,15 @@
     }
 
 </script>
-<form class="widget-form">
-    {widget.index}
-    {#if widget.fields.length > 0}
-        {#each widget.fields as field, index}
-            <svelte:component 
-                this={componentMap[field.type]}
-                {field} 
-                {widget}
-                on:fieldChange={() => handleFieldChange(event)} 
-            />
-        {/each}
-    {:else}
-        <RichTextField/>
-    {/if}
+<form class="widget-form" >
+    {widget.index} - {widget.type}
+    {#each widget.fields as field, index}
+        <svelte:component 
+            this={componentMap[field.type]}
+            {field} 
+            {widget}
+            on:fieldChange={() => handleFieldChange(event)} 
+        />
+    {/each}
 </form>
 
