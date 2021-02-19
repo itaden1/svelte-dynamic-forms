@@ -35,7 +35,6 @@
             component.setFieldByName(event.target.name, event.target.value);
             existingComponents.patch(component);
         } else {
-            console.log(existingComponents);
             component.setFieldByName(event.target.name, event.target.value);
             existingComponents.patch(component);
         }
