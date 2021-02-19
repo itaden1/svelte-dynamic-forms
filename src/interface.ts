@@ -15,3 +15,8 @@ export interface iElement {
     getAttribute(name: string);
     setAttribute(name: string, value: string);
 }
+
+
+export interface iIndexedObj {
+    index: number;
+}

@@ -1,6 +1,11 @@
 <script lang="ts">
-    import { loop_guard } from "svelte/internal";
-import H1Component from "./H1Component.svelte";
+    import { loop_guard, onMount, select_value } from "svelte/internal";
+    import { beforeUpdate, afterUpdate } from 'svelte';
+
+    import { editorTarget } from "../stores";
+    import type { IIndexedObj } from "../interface";
+    import reIndexComponents from "../lib/helpers";
+    import H1Component from "./H1Component.svelte";
     import H2Component from "./H2Component.svelte";
     import H3Component from "./H3Component.svelte";
     import PComponent from "./PComponent.svelte";
@@ -16,19 +21,41 @@ import H1Component from "./H1Component.svelte";
         "p": PComponent,
     }
 
-    let data = [
-        {type: "h1", content: "Heading"},
-        {type: "p", content: "All of the other contents"},
+    let data: Array<IIndexedObj> = [
+        {index: 0, type: "h1", content: "Heading"},
+        {index: 1, type: "p", content: "All of the other contents"},
     ];
+
+    afterUpdate(() => {
+            console.log($editorTarget);
+            const targetElement = document.querySelector(`[data-element-key="${String($editorTarget)}"]`);
+            let node = targetElement.parentNode.childNodes
+            let selection = window.getSelection();
+            console.log(targetElement, "<<<<<<<<<<");
+            let range = document.createRange();
+            selection.removeAllRanges();
+            range.selectNodeContents(targetElement);
+            range.collapse(false);
+            selection.addRange(range);
+            targetElement.focus()
+    });
 
 
     function handleKeyPress(e){
-        if (e.target.parentElement.id === "ediatableContent"){
+        if (e.target.parentElement.id === "ediatableContent" && e.code === "Enter"){
             e.preventDefault();
-            const newField = {type: "p", content: ""};
-            data = [...data, newField];
+            let selection = window.getSelection();
+            const currentTargetKey = String(selection.anchorNode.parentElement.getAttribute("data-element-key"));
+            const newField = {key: currentTargetKey + 1, type: "p", content: ""};
+            let dataCopy = [...data];
+            dataCopy.splice(Number(currentTargetKey) + 1, 0, newField)
+            console.log($editorTarget, "]]]]]]]]]]]]")
+            console.log(currentTargetKey, "!!!!!!");
+            editorTarget.update(n => Number(currentTargetKey) + 1);
+            console.log($editorTarget, ":::::::")
+            data = reIndexComponents(Number(currentTargetKey) - 1, dataCopy);
+
         }
-        console.log(data);
     }
 
     function handleInput(e){

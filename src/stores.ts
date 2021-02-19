@@ -2,18 +2,9 @@ import { readable, writable } from "svelte/store";
 import type { iComponentOption } from "./interface";
 import type { WidgetComponent } from "./models";
 
+import reIndexComponents from "./lib/helpers";
 
-function reIndexComponents(index, components) {
-    return components.map((c, i) => {
-        if (index === 0){
-            c.index = i;
-        }
-        else if (c.index >= index) {
-            c.index++;
-        }
-        return c;
-    });
-}
+export const editorTarget = writable(0); 
 
 function createExistingComponetns() {
     const {subscribe, set, update } = writable<Array<WidgetComponent>>([]);

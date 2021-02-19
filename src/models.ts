@@ -1,6 +1,6 @@
-import type { iField, iElement } from "./interface";
+import type { iField, iElement, iIndexedObj } from "./interface";
 
-export class WidgetComponent {
+export class WidgetComponent implements iIndexedObj {
     index: number;
     type: string;
     name: string;
@@ -42,6 +42,10 @@ export class BaseElement implements iElement{
     setAttribute(name: string, value: string) {
         this[name] = value;
     }
+}
+
+export class HTMLElement extends BaseElement implements iElement, iIndexedObj {
+    index: number;
 }
 
 export class ImageElement extends BaseElement {
