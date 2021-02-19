@@ -16,15 +16,19 @@ import H1Component from "./H1Component.svelte";
         "p": PComponent,
     }
 
-    const data = [
+    let data = [
         {type: "h1", content: "Heading"},
         {type: "p", content: "All of the other contents"},
     ];
 
 
     function handleKeyPress(e){
-        console.log(e.target);
-        if e.target.parentElement.id === 
+        if (e.target.parentElement.id === "ediatableContent"){
+            e.preventDefault();
+            const newField = {type: "p", content: ""};
+            data = [...data, newField];
+        }
+        console.log(data);
     }
 
     function handleInput(e){
