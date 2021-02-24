@@ -58,14 +58,13 @@
 					[image]
 				</button>
 				<button
-					on:click="{() => addComponent("richText", index) }">
-					[Rich Text]
+					on:click="{() => addComponent("H1", index) }">
+					[H1]
 				</button>
-				<button 
-					on:click="{() => addComponent("table", index) }">
-					[table]
+				<button
+					on:click="{() => addComponent("P", index) }">
+					[P]
 				</button>
-
 				<button 
 					on:click="{() => widgetsOpen = !widgetsOpen}">
 					close
@@ -79,12 +78,12 @@
 			[image]
 		</button>
 		<button
-			on:click="{() => addComponent("richText", 0) }">
-			[Rich Text]
+			on:click="{() => addComponent("H1", 0) }">
+			[H1]
 		</button>
 		<button
-			on:click="{() => addComponent("table", 0) }">
-			[table]
+			on:click="{() => addComponent("P", 0) }">
+			[P]
 		</button>
 	{/if}
 

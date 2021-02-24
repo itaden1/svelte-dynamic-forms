@@ -12,13 +12,15 @@
     const componentMap = {
         "file": GenericFileField,
         "input": GenericInputField,
-        "contentEditable": RichTextField
+        "H1": RichTextField,
+        "H2": RichTextField,
+        "P": RichTextField,
     }
 
     function handleFieldChange(event: { target: HTMLInputElement; }){
         // if the target is a file field we create a data url of the file and apply it to the element
         let component:WidgetComponent = $existingComponents.filter(c => c.active).pop();
-
+        console.log(event);
         if (event.target.type === "file"){
             let fReader = new FileReader();
             fReader.readAsDataURL(event.target.files[0]);
@@ -35,6 +37,7 @@
             component.setFieldByName(event.target.name, event.target.value);
             existingComponents.patch(component);
         } else {
+            console.log("things here", event);
             component.setFieldByName(event.target.name, event.target.value);
             existingComponents.patch(component);
         }
@@ -49,7 +52,7 @@
             this={componentMap[field.type]}
             {field} 
             {widget}
-            on:fieldChange={() => handleFieldChange(event)} 
+            on:fieldChange={(event) => handleFieldChange(event)} 
         />
     {/each}
 </form>

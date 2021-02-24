@@ -47,11 +47,18 @@ export const componentOptions = readable<{[key: string]: iComponentOption}>({
                 {type: "input", name: "alt", value: ""}
             ]
         },
-    richText: {
+    H1: {
         type: "richText",
         name: "richText",
         fields: [
-            {type: "contentEditable", name: "content", value: ""}
+            {type: "H1", name: "content", value: ""}
+        ]
+    },
+    P: {
+        type: "richText",
+        name: "richText",
+        fields: [
+            {type: "P", name: "content", value: ""}
         ]
     }
     }, function start(set){
