@@ -3,7 +3,7 @@
     import { beforeUpdate, afterUpdate } from 'svelte';
 
     import { editorTarget } from "../stores";
-    import type { IIndexedObj } from "../interface";
+    import type { iIndexedObj } from "../interface";
     import reIndexComponents from "../lib/helpers";
     import H1Component from "./H1Component.svelte";
     import H2Component from "./H2Component.svelte";
